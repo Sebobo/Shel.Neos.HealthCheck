@@ -1,0 +1,8 @@
+- name: 'Healthcheck'
+  uriPattern: 'healthcheck'
+  defaults:
+    '@package': 'Shel.Neos.HealthCheck'
+    '@controller': 'HealthCheck'
+    '@action': 'status'
+    '@format': 'json'
+  httpMethods: [ 'GET' ]

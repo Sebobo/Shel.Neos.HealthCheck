@@ -1,0 +1,37 @@
+{
+  "name": "shel/neos-healthcheck",
+  "description": "Rest endpoint to check the health and customisable metrics of a Neos CMS instance",
+  "type": "neos-plugin",
+  "license": "MIT",
+  "version": "1.0.0",
+  "keywords": [
+    "neos",
+    "neoscms",
+    "flow",
+    "healthcheck"
+  ],
+  "authors": [
+    {
+      "name": "Sebastian Helzle",
+      "email": "sebastian@helzle.it",
+      "homepage": "https://www.helzle.it",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "neos/neos": "^8.3"
+  },
+  "suggest": {
+    "flownative/token-authentication": "To use the token authentication feature, install flownative/token-authentication"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shel\\Neos\\HealthCheck\\": "Classes"
+    }
+  },
+  "extra": {
+    "neos": {
+      "package-key": "Shel.Neos.HealthCheck"
+    }
+  }
+}

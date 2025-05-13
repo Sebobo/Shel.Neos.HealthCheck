@@ -1,0 +1,15 @@
+Shel:
+  Neos:
+    HealthCheck:
+      checks:
+        packageVersions:
+          include:
+            - 'Neos.Neos'
+            - 'Neos.Neos.Ui'
+        phpConfiguration:
+          include:
+            - 'memory_limit'
+            - 'max_execution_time'
+            - 'max_input_time'
+            - 'post_max_size'
+            - 'upload_max_filesize'

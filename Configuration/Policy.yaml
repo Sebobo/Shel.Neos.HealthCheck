@@ -1,0 +1,18 @@
+privilegeTargets:
+  Neos\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
+    'Shel.Neos.HealthCheck:Status':
+      description: 'Privilege to access the status action of the HealthCheck controller'
+      matcher: method(Shel\Neos\HealthCheck\Controller\HealthCheckController->statusAction())
+
+roles:
+  'Neos.Neos:Administrator':
+    privileges:
+      - privilegeTarget: 'Shel.Neos.HealthCheck:Status'
+        permission: GRANT
+
+  'Shel.Neos.HealthCheck:Client':
+    label: 'Healthcheck Client'
+    description: 'Grants access to the healthcheck endpoint'
+    privileges:
+      - privilegeTarget: 'Shel.Neos.HealthCheck:Status'
+        permission: GRANT

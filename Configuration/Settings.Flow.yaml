@@ -1,0 +1,17 @@
+Neos:
+  Flow:
+    mvc:
+      routes:
+        'Shel.Neos.HealthCheck':
+          position: 'before Neos.Neos'
+
+    security:
+      authentication:
+        providers:
+          'Shel.Neos.HealthCheck:TokenAuthenticator':
+            provider: Flownative\TokenAuthentication\Security\HashTokenProvider
+            requestPatterns:
+              'Shel.Neos.HealthCheck:Controllers':
+                pattern: ControllerObjectName
+                patternOptions:
+                  controllerObjectNamePattern: 'Shel\Neos\HealthCheck\Controller\.*'
