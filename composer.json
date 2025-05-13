@@ -3,7 +3,6 @@
   "description": "Rest endpoint to check the health and customisable metrics of a Neos CMS instance",
   "type": "neos-plugin",
   "license": "MIT",
-  "version": "1.0.0",
   "keywords": [
     "neos",
     "neoscms",
