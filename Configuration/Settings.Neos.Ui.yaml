@@ -1,0 +1,11 @@
+Neos:
+  Neos:
+    Ui:
+      resources:
+        stylesheets:
+          'Shel.Neos.HealthCheck:HealthCheck':
+            resource: resource://Shel.Neos.HealthCheck/Public/Plugin.css
+
+        javascript:
+          'Shel.Neos.HealthCheck:HealthCheck':
+            resource: resource://Shel.Neos.HealthCheck/Public/Plugin.js

@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "description": "Display health check data in the Neos CMS backend",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn workspace @shel-neos-healthcheck/view run build",
+    "watch": "yarn workspace @shel-neos-healthcheck/view run watch"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "@shel-neos-healthcheck/view": "workspace:*"
+  }
+}

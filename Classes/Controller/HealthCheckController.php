@@ -4,44 +4,30 @@ declare(strict_types=1);
 
 namespace Shel\Neos\HealthCheck\Controller;
 
+/**
+ * This file is part of the Shel.Neos.HealthCheck package.
+ *
+ * (c) 2025 Sebastian Helzle
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\Mvc\View\JsonView;
-use Neos\Flow\Reflection\ReflectionService;
-use Shel\Neos\HealthCheck\Checks\HealthCheckInterface;
+use Shel\Neos\HealthCheck\Service\HealthCheckService;
 
 class HealthCheckController extends ActionController
 {
     protected $defaultViewObjectName = JsonView::class;
 
+    #[Flow\Inject]
+    protected HealthCheckService $healthCheckService;
+
     public function statusAction(): void
     {
-        $checks = $this->reflectionService->getAllImplementationClassNamesForInterface(HealthCheckInterface::class);
-
-        $hasErrors = false;
-        $hasWarnings = false;
-        $checkResults = [];
-        foreach ($checks as $checkClassName) {
-            /** @var HealthCheckInterface $check */
-            $check = new $checkClassName();
-            if ($check->isError()) {
-                $hasErrors = true;
-            }
-            if ($check->isWarning()) {
-                $hasWarnings = true;
-            }
-            $checkResults[$check->getName()] = $check->getValue();
-        }
-
-        $this->view->assign('value', [
-            'status' => match (true) {
-                $hasErrors => 'error',
-                $hasWarnings => 'warning',
-                default => 'ok',
-            },
-            'message' => $hasErrors ? 'The system is not healthy.' : 'The system is healthy.',
-            'timestamp' => time(),
-            ...$checkResults,
-        ]);
+        $this->view->assign('value', $this->healthCheckService->getStatus());
     }
 }

@@ -1,6 +1,22 @@
 Shel:
   Neos:
     HealthCheck:
+      environments:
+#        production:
+#          label: 'Production'
+#          icon: 'euro-sign'
+#          url: ''
+#        staging:
+#          label: 'Staging'
+#          icon: 'flask'
+#          url: ''
+#          headers:
+#            - name: 'Authorization'
+#              value: 'Basic <base64-encoded-credentials>'
+        development:
+          label: 'Development'
+          icon: 'user-ninja'
+          url: '<current>'
       checks:
         packageVersions:
           include:
