@@ -47,6 +47,9 @@ class EnvironmentsDataSource extends AbstractDataSource
         $results = [];
 
         foreach ($this->environments as $environmentName => $environment) {
+            if (!is_array($environment)) {
+                continue;
+            }
             $url = $environment['url'];
             $results[$environmentName] = [
                 'label' => $environment['label'],
