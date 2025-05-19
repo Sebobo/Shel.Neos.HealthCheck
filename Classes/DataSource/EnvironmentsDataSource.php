@@ -16,6 +16,8 @@ namespace Shel\Neos\HealthCheck\DataSource;
 
 use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Security\Authorization\PrivilegeManagerInterface;
+use Neos\Flow\Security\Context;
 use Neos\Neos\Service\DataSource\AbstractDataSource;
 use Shel\Neos\HealthCheck\Service\HealthCheckService;
 
@@ -31,6 +33,15 @@ class EnvironmentsDataSource extends AbstractDataSource
     #[Flow\Inject]
     protected HealthCheckService $healthCheckService;
 
+    #[Flow\Inject]
+    protected Context $securityContext;
+
+    /**
+     * @var PrivilegeManagerInterface
+     */
+    #[Flow\Inject]
+    protected $privilegeManager;
+
     /**
      * @var string
      */
@@ -43,8 +54,17 @@ class EnvironmentsDataSource extends AbstractDataSource
         NodeInterface $node = null,
         array $arguments = []
     ): array {
-
         $results = [];
+
+        if (!$this->securityContext->canBeInitialized() || !$this->privilegeManager->isPrivilegeTargetGranted(
+                'Shel.Neos.HealthCheck:Status'
+            )) {
+            return [
+                'success' => false,
+                'message' => 'You do not have permission to access this data source.',
+                'environments' => [],
+            ];
+        }
 
         foreach ($this->environments as $environmentName => $environment) {
             if (!is_array($environment)) {

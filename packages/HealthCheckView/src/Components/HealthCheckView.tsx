@@ -15,6 +15,9 @@ export class HealthCheckView extends PureComponent {
     componentDidMount() {
         loadEnvironments()
             .then(({ success, message, environments }) => {
+                if (!success) {
+                    console.warn('Could not load application environments:', message);
+                }
                 this.setState({ loading: false, environments });
             })
             .catch((err) => {
@@ -25,47 +28,40 @@ export class HealthCheckView extends PureComponent {
     render() {
         const { environments } = this.state;
 
-        return (
+        return environments && Object.keys(environments).length > 0 ? (
             <div className="health-check">
-                {Object.keys(environments).length > 0 ? (
-                    Object.keys(environments)
-                        .filter((environment) => environments[environment].data.status !== 'unavailable')
-                        .sort((a, b) => (environments[a].isCurrent ? -1 : 1))
-                        .map((environment) => {
-                            const { label, icon, isCurrent, data } = environments[environment];
-                            return (
-                                <details
-                                    className={classnames(
-                                        'health-check__item',
-                                        isCurrent && 'health-check__item--current'
-                                    )}
-                                    name="health-check__items"
-                                    key={label}
-                                >
-                                    <summary>
-                                        {icon ? <Icon icon={icon} padded="right" /> : ''}
-                                        {label}
-                                    </summary>
-                                    <table>
-                                        {Object.keys(data).map((key) => {
-                                            const formattedValue = formatValue(data[key]);
-                                            return (
-                                                <tr key={key}>
-                                                    <td>{key.charAt(0).toUpperCase() + key.slice(1)}</td>
-                                                    <td>
-                                                        <pre title={formattedValue}>{formattedValue}</pre>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </table>
-                                </details>
-                            );
-                        })
-                ) : (
-                    <div className="health-check__item health-check__item--loading">Loading environments…</div>
-                )}
+                {Object.keys(environments)
+                    .filter((environment) => environments[environment].data.status !== 'unavailable')
+                    .sort((a, b) => (environments[a].isCurrent ? -1 : 1))
+                    .map((environment) => {
+                        const { label, icon, isCurrent, data } = environments[environment];
+                        return (
+                            <details
+                                className={classnames('health-check__item', isCurrent && 'health-check__item--current')}
+                                name="health-check__items"
+                                key={label}
+                            >
+                                <summary>
+                                    {icon ? <Icon icon={icon} padded="right" /> : ''}
+                                    {label}
+                                </summary>
+                                <table>
+                                    {Object.keys(data).map((key) => {
+                                        const formattedValue = formatValue(data[key]);
+                                        return (
+                                            <tr key={key}>
+                                                <td>{key.charAt(0).toUpperCase() + key.slice(1)}</td>
+                                                <td>
+                                                    <pre title={formattedValue}>{formattedValue}</pre>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </table>
+                            </details>
+                        );
+                    })}
             </div>
-        );
+        ) : null;
     }
 }
