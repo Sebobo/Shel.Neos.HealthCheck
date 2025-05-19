@@ -1,5 +1,11 @@
 # Healthcheck endpoint for Neos CMS
 
+This package provides a healthcheck endpoint for Neos CMS and a UI integration for the Neos backend.
+
+This should help with monitoring and checking the health of your Neos installations.
+The backend integration allows to quickly check customizable details about the various environments
+of the application, f.e. local dev, staging and production.
+
 ## Installation
 
 Install the package via composer:
@@ -7,6 +13,10 @@ Install the package via composer:
 ```console
 composer require shel/neos-healthcheck
 ```
+
+## Example of backend integration
+
+[![Backend integration](HealthCheckExample.jpg)](HealthCheckExample.jpg)
 
 ## Example output of the endpoint
 
@@ -55,6 +65,13 @@ This will create a token which you can use to authenticate the request either as
 
 You can configure some of the individual checks in your `Settings.yaml` file.
 See [Configuration/Settings.HealthChecks.yaml](Configuration/Settings.HealthChecks.yaml) for the available options.
+
+### UI integration configuration
+
+It is recommended to either only configure the ui integration in the development context 
+or have an environment specific configuration for each context.
+Also don't commit the hashed tokens to your repository which are required for the integration
+to access the various systems.
 
 ## License
 
