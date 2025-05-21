@@ -1,5 +1,4 @@
 const esbuild = require('esbuild');
-const NodePath = require('path');
 const extensibilityMap = require('@neos-project/neos-ui-extensibility/extensibilityMap.json');
 const isWatch = process.argv.includes('--watch');
 
@@ -7,23 +6,13 @@ const isWatch = process.argv.includes('--watch');
 const options = {
     logLevel: 'info',
     bundle: true,
-    minify: true,
+    minify: !isWatch,
     target: 'es2020',
-    format: 'esm',
-    splitting: true,
-    sourcemap: 'linked',
     entryPoints: { Plugin: 'src/index.js' },
     loader: {
         '.js': 'tsx',
     },
-    alias: {
-        ...extensibilityMap,
-        fs: NodePath.join(__dirname, 'src/stubs/fs.ts'),
-    },
-    define: {
-        // for chalk.js
-        'process.platform': 'undefined',
-    },
+    alias: extensibilityMap,
     outdir: '../../Resources/Public',
 };
 
