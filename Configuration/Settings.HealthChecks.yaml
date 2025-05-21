@@ -1,6 +1,13 @@
 Shel:
   Neos:
     HealthCheck:
+      # A token to be used for authentication on the current system,
+      # if you use the token authentication provider of this package.
+      # If not set, this authentication provider will never authenticate.
+      token: null
+      # The name of the environment that will be displayed in the UI.
+      # You should use a different configuration for each environment,
+      # as you don't want to see staging in production, etc….
       environments:
 #        production:
 #          label: 'Production'
@@ -14,15 +21,20 @@ Shel:
 #            - name: 'Authorization'
 #              value: 'Basic <base64-encoded-credentials>'
         development:
+          # The name of the environment that will be displayed in the UI.
           label: 'Development'
+          # Any Neos.Ui compatible icon name
           icon: 'user-ninja'
+          # Use "<current>" to resolve data internally from the active system instead of a remote URL
           url: '<current>'
       checks:
         packageVersions:
+          # Add any package names you want to check here.
           include:
             - 'Neos.Neos'
             - 'Neos.Neos.Ui'
         phpConfiguration:
+          # Add any php configuration values you want to check here.
           include:
             - 'memory_limit'
             - 'max_execution_time'

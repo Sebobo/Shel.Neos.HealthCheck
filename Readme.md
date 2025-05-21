@@ -66,6 +66,36 @@ This will create a token which you can use to authenticate the request either as
 You can configure some of the individual checks in your `Settings.yaml` file.
 See [Configuration/Settings.HealthChecks.yaml](Configuration/Settings.HealthChecks.yaml) for the available options.
 
+### Authorization
+
+The package provides a very simple token based authentication for the endpoint.
+You can configure the token in your `Settings.yaml` file:
+
+```yaml
+Shel:
+  Neos:
+    HealthCheck:
+      token: '%env:HEALTHCHECK_TOKEN%'
+```
+
+This would read the token from the environment variable and allow you to access the endpoint via
+`<host>/healthcheck?token=<myToken>` or via the same url but a `Bearer` header instead of the query param.
+You can also set the token directly in the `Settings.yaml` file, but this is not recommended for security reasons.
+
+You can also configure your own authentication provider or use a more configurable token authentication like [flownative/token-authentication](https://github.com/flownative/flow-token-auth) and add the following configuration:
+
+```yaml
+Neos:
+  Flow:
+    security:
+      authentication:
+        providers:
+          'Shel.Neos.HealthCheck:TokenAuthenticator':
+            provider: Flownative\TokenAuthentication\Security\HashTokenProvider
+```
+
+Make sure to read the documentation of the authentication provider you are using to configure it correctly.
+
 ### UI integration configuration
 
 It is recommended to either only configure the ui integration in the development context 

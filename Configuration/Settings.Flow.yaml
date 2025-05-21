@@ -9,7 +9,7 @@ Neos:
       authentication:
         providers:
           'Shel.Neos.HealthCheck:TokenAuthenticator':
-            provider: Flownative\TokenAuthentication\Security\HashTokenProvider
+            provider: Shel\Neos\HealthCheck\Security\TokenProvider
             requestPatterns:
               'Shel.Neos.HealthCheck:Controllers':
                 pattern: ControllerObjectName
