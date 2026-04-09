@@ -15,7 +15,6 @@ namespace Shel\Neos\HealthCheck\Checks;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Core\Bootstrap;
 use Neos\Flow\Package\Exception\UnknownPackageException;
 use Neos\Flow\Package\PackageManager;
 

@@ -14,7 +14,6 @@ namespace Shel\Neos\HealthCheck\DataSource;
  * source code.
  */
 
-use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Security\Authorization\PrivilegeManagerInterface;
 use Neos\Flow\Security\Context;
@@ -51,7 +50,7 @@ class EnvironmentsDataSource extends AbstractDataSource
      *
      */
     public function getData(
-        NodeInterface $node = null,
+        mixed $node = null,
         array $arguments = []
     ): array {
         $results = [];
